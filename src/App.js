@@ -1,25 +1,33 @@
-import logo from './logo.svg';
 import './App.css';
+import { useCallback, useState } from 'react';
+import Content from './Content';
+import ContentCallback from './ContentCallback';
+
+// 1.Memo() => Higher Order Component
+// 2.useCallback ()
 
 function App() {
+  const [count, setCount] = useState(0);
+
+  const handleIncrease = () => {
+    setCount(prevCount => prevCount + 1);
+  }
+
+  const handleWithUseCallbackIncrease = useCallback (() => {
+    setCount(prevCount => prevCount + 1);
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <>
+    <div style={{padding: '10px 32px'}}>
+      <Content/>
+      <h1>{count}</h1>
+      <button onClick= {handleIncrease}> Click </button> 
+      <ContentCallback onIncrease={handleWithUseCallbackIncrease}  />
+
     </div>
-  );
+    </>
+  )
 }
 
 export default App;
